@@ -1,0 +1,19 @@
+paho-mqtt>=1.6.1
+
+# Sensor anomaly detection
+scikit-learn>=1.3.0
+numpy>=1.24.0
+joblib>=1.3.0
+
+# Camera — person detection
+ultralytics>=8.0.0      # YOLOv8 (yolov8n.pt auto-downloaded on first run ~6MB)
+opencv-python>=4.8.0
+
+# Camera — face recognition
+face_recognition>=1.3.0
+
+# Dashboard
+streamlit>=1.28.0
+plotly>=5.18.0
+pandas>=2.0.0
+Pillow>=10.0.0
