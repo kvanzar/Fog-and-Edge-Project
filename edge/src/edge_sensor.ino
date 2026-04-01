@@ -1,13 +1,3 @@
-/*
- * Arduino Uno + SW-420 Vibration Sensor
- * Sends vibration events as JSON over USB Serial to laptop.
- *
- * Wiring:
- *   SW-420 VCC  →  Arduino 5V
- *   SW-420 GND  →  Arduino GND
- *   SW-420 DO   →  Arduino Pin 2
- */
-
 #define VIBRATION_PIN   2      // Must be pin 2 or 3 (interrupt pins)
 #define WINDOW_MS       500    // Count pulses over 500ms window
 #define DEBOUNCE_MS      20    // Ignore bounces within 20ms

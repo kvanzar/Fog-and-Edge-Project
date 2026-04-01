@@ -1,13 +1,3 @@
-# ============================================================
-#  dashboard/app.py  —  Real-Time Streamlit Dashboard
-#
-#  Subscribes to fog/results and renders two tabs:
-#    Tab 1 — Camera: intruder snapshots + event log
-#    Tab 2 — Sensors: live charts + anomaly log
-#
-#  Run: streamlit run dashboard/app.py  (from project root)
-# ============================================================
-
 import json
 import os
 import time

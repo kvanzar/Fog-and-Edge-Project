@@ -1,6 +1,5 @@
 # 🌫️ AI-Driven Edge–Fog System for Real-Time Anomaly Detection
 
-> **VIT Project | 50% Implementation**
 > Team: Kshitij · Ananya · Mehak · Akanshi
 
 ---
@@ -28,7 +27,7 @@ fog_project/
 │   └── app.py                     ← Streamlit dashboard
 │
 ├── tools/
-│   └── simulator.py               ← Fake ESP32 data (no hardware needed)
+│   └── simulator.py               ← ESP32 data 
 │
 ├── requirements.txt
 └── README.md
@@ -139,16 +138,4 @@ python tools/simulator.py
 
 ---
 
-## 50% Implementation Checklist
 
-- [x] ESP32 reads + filters sensor data (Moving Average filter)
-- [x] MQTT communication Edge → Fog laptop
-- [x] Isolation Forest trains on live sensor data
-- [x] Real-time sensor anomaly scoring + alerting
-- [x] ALERT command sent back to ESP32 (LED + Buzzer)
-- [x] YOLOv8 person detection on webcam
-- [x] Face recognition — Known vs Unknown classification
-- [x] Intruder snapshots auto-saved
-- [x] Unified Streamlit dashboard (2 tabs)
-- [ ] Cloud storage (future phase)
-- [ ] Multi-node / federated learning (future phase)

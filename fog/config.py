@@ -31,7 +31,7 @@ KNOWN_FACES_DIR     = "fog/known_faces"
 SNAPSHOTS_DIR       = "fog/intruder_snapshots"
 
 # ── VIBRATION SENSOR (Arduino Uno + SW-420) ───────────────────
-SERIAL_PORT      = "/dev/tty.usbserial-1130"   # ← your port
+SERIAL_PORT      = "/dev/tty.usbserial-1130"   # your port
 SERIAL_BAUD      = 9600
 SERIAL_TIMEOUT   = 2
 

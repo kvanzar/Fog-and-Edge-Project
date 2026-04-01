@@ -1,12 +1,5 @@
 # ============================================================
 #  fog/vibration_engine.py  —  SW-420 Vibration Processing
-#
-#  Reads JSON from Arduino over USB Serial.
-#  On vibration detection:
-#    - Plays a system sound on Mac (afplay)
-#    - Sets a flag that camera_guard reads to show
-#      an on-screen warning banner in the camera window
-#    - Checks cross-sensor correlation with camera
 # ============================================================
 
 import json
@@ -14,7 +7,6 @@ import time
 import logging
 import threading
 import subprocess
-import os
 from datetime import datetime
 from collections import defaultdict
 
@@ -36,7 +28,6 @@ VIBRATION_ALERT_LEVEL = {
     "CONFIRMED_BREACH": "CRITICAL",
 }
 
-# How long the on-screen warning banner stays visible (seconds)
 WARNING_DISPLAY_SECONDS = 5
 
 
@@ -50,68 +41,48 @@ class VibrationEngine:
         self._last_camera_t    = 0.0
         self._lock             = threading.Lock()
 
-        # ── On-screen warning state (read by camera_guard) ────
-        # camera_guard polls these every frame to show banner
-        self.warning_active    = False   # True = show banner on camera
-        self.warning_text      = ""      # Text to show in banner
-        self.warning_level     = ""      # LOW / MEDIUM / HIGH / CRITICAL
-        self._warning_until    = 0.0     # Hide banner after this timestamp
+        self.warning_active = False
+        self.warning_text   = ""
+        self.warning_level  = ""
+        self._warning_until = 0.0
 
         self.stats = {
-            "total_events":    0,
-            "knock":           0,
-            "force":           0,
-            "breach":          0,
+            "total_events":     0,
+            "knock":            0,
+            "force":            0,
+            "breach":           0,
             "confirmed_breach": 0,
-            "arduino_online":  False,
+            "arduino_online":   False,
         }
 
     # ── SOUND ─────────────────────────────────────────────────
 
     def _play_sound(self, level: str):
-        """
-        Play a system sound on Mac using afplay.
-        Different sound per threat level.
-        Non-blocking — runs in a separate thread.
-        """
-        # Mac system sounds are in /System/Library/Sounds/
         sound_map = {
             "LOW":      "/System/Library/Sounds/Tink.aiff",
             "MEDIUM":   "/System/Library/Sounds/Sosumi.aiff",
             "HIGH":     "/System/Library/Sounds/Basso.aiff",
             "CRITICAL": "/System/Library/Sounds/Funk.aiff",
         }
-        sound_file = sound_map.get(level, sound_map["HIGH"])
-
         def _play():
             try:
                 subprocess.run(
-                    ["afplay", sound_file],
-                    check=False,
-                    stdout=subprocess.DEVNULL,
-                    stderr=subprocess.DEVNULL,
+                    ["afplay", sound_map.get(level, sound_map["HIGH"])],
+                    check=False, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL,
                 )
             except FileNotFoundError:
-                # afplay not available (non-Mac) — use terminal bell instead
                 print("\a", end="", flush=True)
-
         threading.Thread(target=_play, daemon=True).start()
 
     # ── ON-SCREEN WARNING ─────────────────────────────────────
 
     def _set_warning(self, text: str, level: str):
-        """Set the warning that camera_guard will display as a banner."""
-        self.warning_text  = text
-        self.warning_level = level
+        self.warning_text   = text
+        self.warning_level  = level
         self.warning_active = True
         self._warning_until = time.time() + WARNING_DISPLAY_SECONDS
-        log.warning(f"On-screen warning set: [{level}] {text}")
 
     def tick_warning(self):
-        """
-        Call this every frame from camera_guard.
-        Clears the warning once its display time expires.
-        """
         if self.warning_active and time.time() > self._warning_until:
             self.warning_active = False
             self.warning_text   = ""
@@ -120,36 +91,23 @@ class VibrationEngine:
     # ── CROSS-SENSOR CORRELATION ──────────────────────────────
 
     def notify_camera_alert(self, threat_level: str):
-        """Called by camera_guard when a visual alert fires."""
         now = time.time()
         with self._lock:
             self._last_camera_t = now
             time_since_vib = now - self._last_vibration_t
-
         if 0 < time_since_vib <= CORRELATION_WINDOW_S:
-            self._raise_confirmed_breach(
-                camera_threat=threat_level,
-                delta_s=round(time_since_vib, 1),
-            )
+            self._raise_confirmed_breach(threat_level, round(time_since_vib, 1))
 
     def _check_vibration_correlation(self):
-        """Called after vibration — checks if camera also fired recently."""
         now = time.time()
         with self._lock:
             time_since_cam = now - self._last_camera_t
-
         if 0 < time_since_cam <= CORRELATION_WINDOW_S:
-            self._raise_confirmed_breach(
-                camera_threat="recent camera alert",
-                delta_s=round(time_since_cam, 1),
-            )
+            self._raise_confirmed_breach("recent camera alert", round(time_since_cam, 1))
 
     def _raise_confirmed_breach(self, camera_threat: str, delta_s: float):
         self.stats["confirmed_breach"] += 1
-        msg = (
-            f"CONFIRMED BREACH — vibration + camera "
-            f"both triggered within {delta_s}s"
-        )
+        msg = f"CONFIRMED BREACH — vibration + camera both triggered within {delta_s}s"
         self._set_warning(msg, "CRITICAL")
         self._play_sound("CRITICAL")
         self._publish({
@@ -170,12 +128,10 @@ class VibrationEngine:
         if event == "HEARTBEAT":
             self.stats["arduino_online"] = True
             return
-
         if event == "READY":
             self.stats["arduino_online"] = True
             log.info("Arduino Uno online.")
             return
-
         if event != "VIBRATION":
             return
 
@@ -185,14 +141,13 @@ class VibrationEngine:
         alert_level  = VIBRATION_ALERT_LEVEL.get(threat_label, "LOW")
 
         self.stats["total_events"] += 1
-        if intensity == "LOW":    self.stats["knock"]  += 1
-        elif intensity == "MEDIUM": self.stats["force"] += 1
+        if intensity == "LOW":      self.stats["knock"]  += 1
+        elif intensity == "MEDIUM": self.stats["force"]  += 1
         elif intensity == "HIGH":   self.stats["breach"] += 1
 
         with self._lock:
             self._last_vibration_t = time.time()
 
-        # Warning text shown on camera window
         warning_messages = {
             "LOW":    f"VIBRATION DETECTED — light knock  (pulses: {pulse_count})",
             "MEDIUM": f"VIBRATION ALERT — repeated force  (pulses: {pulse_count})",
@@ -209,7 +164,6 @@ class VibrationEngine:
             "timestamp":    datetime.now().isoformat(),
             "source":       "vibration_engine",
         })
-
         log.warning(f"VIBRATION | {threat_label} | intensity={intensity} | pulses={pulse_count}")
         self._check_vibration_correlation()
 
@@ -220,16 +174,14 @@ class VibrationEngine:
             except Exception as e:
                 log.error(f"MQTT publish failed: {e}")
 
-    # ── SERIAL READ LOOP ──────────────────────────────────────
+    # ── SERIAL ────────────────────────────────────────────────
 
     def _connect_serial(self) -> bool:
         try:
             self._serial = serial.Serial(
-                port=SERIAL_PORT,
-                baudrate=SERIAL_BAUD,
-                timeout=SERIAL_TIMEOUT,
+                port=SERIAL_PORT, baudrate=SERIAL_BAUD, timeout=SERIAL_TIMEOUT,
             )
-            time.sleep(2)   # wait for Arduino reset
+            time.sleep(2)
             log.info(f"Serial connected: {SERIAL_PORT} @ {SERIAL_BAUD} baud")
             return True
         except serial.SerialException as e:
@@ -273,11 +225,7 @@ class VibrationEngine:
                 "Connect Arduino via USB and set SERIAL_PORT in config.py."
             )
         self.running = True
-        threading.Thread(
-            target=self._read_loop,
-            name="VibrationEngine",
-            daemon=True,
-        ).start()
+        threading.Thread(target=self._read_loop, name="VibrationEngine", daemon=True).start()
         log.info("Vibration engine running.")
 
     def stop(self):
