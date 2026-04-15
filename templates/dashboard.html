@@ -1,0 +1,1521 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>FogSec — Security Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Geist+Mono:wght@300;400;500;600&family=Syne:wght@400;600;700;800&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.7.2/socket.io.min.js"></script>
+<style>
+:root {
+  --bg:       #080f17;
+  --surface:  #0d1520;
+  --surface2: #111d2b;
+  --surface3: #162030;
+  --border:   #1e2f40;
+  --border2:  #253a4e;
+  --teal:     #00c9a7;
+  --teal2:    #00e8c0;
+  --blue:     #3b9eff;
+  --blue2:    #70bcff;
+  --red:      #ff4757;
+  --red2:     #ff6b78;
+  --amber:    #ffb830;
+  --amber2:   #ffd070;
+  --green:    #2ed573;
+  --green2:   #5fffaa;
+  --gray:     #3d5568;
+  --gray2:    #5a7890;
+  --text:     #e0edf6;
+  --text2:    #8aaabb;
+  --mono:     'Geist Mono', monospace;
+  --sans:     'Syne', sans-serif;
+  --radius:   6px;
+  --shadow:   0 4px 24px rgba(0,0,0,0.4);
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body { height: 100%; overflow: hidden; }
+
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 14px;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ── HEADER ──────────────────────────────────────────── */
+.header {
+  height: 52px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 20px;
+  flex-shrink: 0;
+  z-index: 100;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.logo-mark {
+  width: 28px;
+  height: 28px;
+  background: var(--teal);
+  border-radius: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+}
+
+.logo-mark::after {
+  content: '';
+  width: 10px;
+  height: 10px;
+  border: 2px solid #080f17;
+  border-radius: 50%;
+}
+
+.logo-name {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 16px;
+  letter-spacing: 0.5px;
+  color: var(--text);
+}
+
+.logo-tag {
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--teal);
+  letter-spacing: 2px;
+  padding: 2px 6px;
+  border: 1px solid rgba(0,201,167,0.3);
+  border-radius: 3px;
+}
+
+.header-right {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.header-stat {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+}
+
+.status-led {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--green);
+  box-shadow: 0 0 6px var(--green);
+  animation: pulse-led 2s infinite;
+}
+
+.status-led.warn { background: var(--amber); box-shadow: 0 0 6px var(--amber); }
+.status-led.off  { background: var(--gray); box-shadow: none; animation: none; }
+
+@keyframes pulse-led {
+  0%,100% { opacity: 1; }
+  50%      { opacity: 0.4; }
+}
+
+.clock {
+  font-family: var(--mono);
+  font-size: 13px;
+  color: var(--teal);
+  letter-spacing: 2px;
+}
+
+/* ── ALERT STRIP ─────────────────────────────────────── */
+.alert-strip {
+  height: 0;
+  overflow: hidden;
+  background: rgba(255,71,87,0.12);
+  border-bottom: 1px solid rgba(255,71,87,0.4);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--red2);
+  letter-spacing: 1px;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  gap: 10px;
+  transition: height 0.3s ease;
+  flex-shrink: 0;
+}
+
+.alert-strip.show { height: 36px; }
+
+.alert-blink {
+  width: 7px; height: 7px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse-led 0.6s infinite;
+}
+
+/* ── MAIN GRID ───────────────────────────────────────── */
+.main {
+  flex: 1;
+  display: grid;
+  grid-template-columns: 300px 1fr 320px;
+  overflow: hidden;
+}
+
+/* ── PANELS ──────────────────────────────────────────── */
+.col {
+  overflow-y: auto;
+  overflow-x: hidden;
+  border-right: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 1px;
+  background: var(--border);
+}
+
+.col:last-child { border-right: none; }
+
+.col::-webkit-scrollbar { width: 3px; }
+.col::-webkit-scrollbar-track { background: transparent; }
+.col::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 2px; }
+
+.section {
+  background: var(--surface);
+  padding: 16px;
+}
+
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.section-title {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  color: var(--text2);
+}
+
+.section-badge {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 2px 7px;
+  border-radius: 3px;
+  letter-spacing: 1px;
+}
+
+.badge-green  { background: rgba(46,213,115,0.12); color: var(--green);  border: 1px solid rgba(46,213,115,0.3); }
+.badge-red    { background: rgba(255,71,87,0.12);  color: var(--red);    border: 1px solid rgba(255,71,87,0.3); }
+.badge-amber  { background: rgba(255,184,48,0.12); color: var(--amber);  border: 1px solid rgba(255,184,48,0.3); }
+.badge-blue   { background: rgba(59,158,255,0.12); color: var(--blue);   border: 1px solid rgba(59,158,255,0.3); }
+.badge-teal   { background: rgba(0,201,167,0.12);  color: var(--teal);   border: 1px solid rgba(0,201,167,0.3); }
+.badge-gray   { background: rgba(61,85,104,0.3);   color: var(--gray2);  border: 1px solid var(--border2); }
+
+/* ── STAT CARDS ──────────────────────────────────────── */
+.stat-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  transition: border-color 0.2s;
+}
+
+.stat-card:hover { border-color: var(--border2); }
+
+.stat-num {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+  margin-bottom: 4px;
+}
+
+.stat-lbl {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1.5px;
+  color: var(--text2);
+  text-transform: uppercase;
+}
+
+/* ── SENSOR CARDS ────────────────────────────────────── */
+.sensor-cards {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sensor-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 14px;
+  position: relative;
+  overflow: hidden;
+}
+
+.sensor-card::before {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent, var(--teal));
+  border-radius: 3px 0 0 3px;
+}
+
+.sensor-label {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 2px;
+  color: var(--text2);
+  text-transform: uppercase;
+  margin-bottom: 6px;
+}
+
+.sensor-value {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 32px;
+  color: var(--accent, var(--teal));
+  line-height: 1;
+}
+
+.sensor-unit {
+  font-size: 14px;
+  font-weight: 400;
+  color: var(--text2);
+  margin-left: 2px;
+}
+
+.sensor-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text2);
+  margin-top: 4px;
+}
+
+/* ── CHART ───────────────────────────────────────────── */
+.chart-wrap {
+  height: 140px;
+  position: relative;
+  margin-top: 8px;
+}
+
+/* ── CAMERA ──────────────────────────────────────────── */
+.camera-wrap {
+  position: relative;
+  background: #030810;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 16/9;
+  border: 1px solid var(--border);
+}
+
+.camera-wrap img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.camera-overlay {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+}
+
+.camera-corner {
+  position: absolute;
+  width: 16px;
+  height: 16px;
+}
+
+.camera-corner.tl { top: 8px; left: 8px; border-top: 1.5px solid var(--teal); border-left: 1.5px solid var(--teal); }
+.camera-corner.tr { top: 8px; right: 8px; border-top: 1.5px solid var(--teal); border-right: 1.5px solid var(--teal); }
+.camera-corner.bl { bottom: 8px; left: 8px; border-bottom: 1.5px solid var(--teal); border-left: 1.5px solid var(--teal); }
+.camera-corner.br { bottom: 8px; right: 8px; border-bottom: 1.5px solid var(--teal); border-right: 1.5px solid var(--teal); }
+
+.cam-status {
+  position: absolute;
+  top: 10px;
+  right: 30px;
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--red2);
+  letter-spacing: 1px;
+}
+
+.cam-status-dot {
+  width: 5px; height: 5px;
+  background: var(--red);
+  border-radius: 50%;
+  animation: pulse-led 1s infinite;
+}
+
+.cam-label {
+  position: absolute;
+  bottom: 10px;
+  left: 10px;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: rgba(255,255,255,0.5);
+  letter-spacing: 1px;
+}
+
+.camera-offline {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 8px;
+  color: var(--gray2);
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 1px;
+}
+
+/* ── ALERT LOG ───────────────────────────────────────── */
+.alert-filter-bar {
+  display: flex;
+  gap: 4px;
+  margin-bottom: 10px;
+  flex-wrap: wrap;
+}
+
+.filter-btn {
+  font-family: var(--mono);
+  font-size: 9px;
+  padding: 3px 9px;
+  border-radius: 3px;
+  border: 1px solid var(--border2);
+  background: transparent;
+  color: var(--text2);
+  cursor: pointer;
+  letter-spacing: 1px;
+  transition: all 0.15s;
+}
+
+.filter-btn.active, .filter-btn:hover {
+  border-color: var(--teal);
+  color: var(--teal);
+  background: rgba(0,201,167,0.08);
+}
+
+.alert-list {
+  height: 220px;
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.alert-list::-webkit-scrollbar { width: 3px; }
+.alert-list::-webkit-scrollbar-thumb { background: var(--border2); }
+
+.alert-item {
+  display: grid;
+  grid-template-columns: 72px 68px 1fr 24px;
+  align-items: start;
+  gap: 6px;
+  padding: 7px 10px;
+  border-radius: 4px;
+  border: 1px solid transparent;
+  cursor: default;
+  transition: background 0.15s;
+  animation: fadeIn 0.2s ease;
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.alert-item:hover { background: var(--surface2); }
+.alert-item.critical { border-color: rgba(255,71,87,0.15); background: rgba(255,71,87,0.04); }
+
+.alert-ts   { font-family: var(--mono); font-size: 10px; color: var(--gray2); white-space: nowrap; padding-top: 1px; }
+.alert-lvl  { font-family: var(--mono); font-size: 10px; font-weight: 600; letter-spacing: 0.5px; }
+.alert-msg  { font-family: var(--mono); font-size: 10px; color: var(--text2); line-height: 1.5; word-break: break-all; }
+.alert-del  { font-size: 12px; color: var(--gray); cursor: pointer; padding-top: 1px; opacity: 0; transition: opacity 0.15s; }
+.alert-item:hover .alert-del { opacity: 1; }
+.alert-del:hover { color: var(--text2); }
+
+.lvl-critical { color: var(--red); }
+.lvl-warning  { color: var(--amber); }
+.lvl-info     { color: var(--blue); }
+.lvl-sensor   { color: var(--teal); }
+
+/* ── SNAPSHOT GALLERY ────────────────────────────────── */
+.snap-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+}
+
+.snap-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: border-color 0.2s;
+  cursor: pointer;
+}
+
+.snap-card:hover { border-color: var(--border2); }
+.snap-card.flagged { border-color: rgba(255,71,87,0.5); }
+.snap-card.resolved { opacity: 0.5; pointer-events: none; }
+
+.snap-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  background: var(--surface3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gray);
+  font-size: 20px;
+}
+
+.snap-img img { width: 100%; height: 100%; object-fit: cover; }
+
+.snap-info {
+  padding: 8px;
+}
+
+.snap-threat {
+  font-family: var(--mono);
+  font-size: 9px;
+  letter-spacing: 1px;
+  margin-bottom: 3px;
+}
+
+.snap-ts {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--gray2);
+}
+
+.snap-actions {
+  display: flex;
+  gap: 4px;
+  margin-top: 6px;
+}
+
+/* ── BUTTONS ─────────────────────────────────────────── */
+.btn {
+  font-family: var(--mono);
+  font-size: 10px;
+  padding: 5px 10px;
+  border-radius: 4px;
+  border: 1px solid;
+  cursor: pointer;
+  letter-spacing: 0.5px;
+  transition: all 0.15s;
+  text-transform: uppercase;
+}
+
+.btn-teal  { border-color: var(--teal);  color: var(--teal);  background: rgba(0,201,167,0.08); }
+.btn-teal:hover  { background: rgba(0,201,167,0.18); }
+.btn-red   { border-color: var(--red);   color: var(--red);   background: rgba(255,71,87,0.08); }
+.btn-red:hover   { background: rgba(255,71,87,0.18); }
+.btn-ghost { border-color: var(--border2); color: var(--text2); background: transparent; }
+.btn-ghost:hover { border-color: var(--gray2); }
+
+.input-field {
+  width: 100%;
+  padding: 6px 10px;
+  background: var(--surface3);
+  border: 1px solid var(--border2);
+  border-radius: 4px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text);
+  outline: none;
+  transition: border-color 0.15s;
+}
+
+.input-field:focus { border-color: var(--teal); }
+.input-field::placeholder { color: var(--gray2); }
+
+/* ── WEATHER/ML ──────────────────────────────────────── */
+.advisory-box {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-top: 10px;
+  border-left: 3px solid var(--advisory-color, var(--green));
+}
+
+.advisory-text {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--text2);
+  line-height: 1.6;
+}
+
+.forecast-row {
+  display: flex;
+  gap: 6px;
+  margin-top: 10px;
+}
+
+.forecast-chip {
+  flex: 1;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 8px 4px;
+  text-align: center;
+}
+
+.fc-hour {
+  font-family: var(--mono);
+  font-size: 8px;
+  color: var(--gray2);
+  letter-spacing: 1px;
+  margin-bottom: 4px;
+}
+
+.fc-temp {
+  font-family: var(--sans);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--amber);
+}
+
+.score-bar-wrap { margin-top: 12px; }
+
+.score-bar-label {
+  display: flex;
+  justify-content: space-between;
+  font-family: var(--mono);
+  font-size: 9px;
+  color: var(--text2);
+  margin-bottom: 5px;
+  letter-spacing: 1px;
+}
+
+.score-bar-track {
+  height: 5px;
+  background: var(--surface3);
+  border-radius: 3px;
+  margin-bottom: 8px;
+  overflow: hidden;
+}
+
+.score-bar-fill {
+  height: 100%;
+  border-radius: 3px;
+  transition: width 0.8s ease;
+}
+
+/* ── AQI ─────────────────────────────────────────────── */
+.aqi-display {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  margin-bottom: 10px;
+}
+
+.aqi-number {
+  font-family: var(--sans);
+  font-weight: 800;
+  font-size: 36px;
+  color: var(--aqi-color, var(--green));
+  line-height: 1;
+}
+
+.aqi-label { font-family: var(--mono); font-size: 10px; color: var(--text2); letter-spacing: 1px; }
+.aqi-cat   { font-family: var(--sans); font-weight: 700; font-size: 14px; color: var(--aqi-color, var(--green)); }
+
+.aqi-components {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 6px;
+  margin-top: 8px;
+}
+
+.aqi-comp {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 8px;
+  font-family: var(--mono);
+}
+
+.aqi-comp-name  { font-size: 8px; color: var(--gray2); letter-spacing: 1.5px; text-transform: uppercase; }
+.aqi-comp-value { font-size: 14px; color: var(--text); font-weight: 600; margin-top: 2px; }
+
+/* ── KNOWN PERSONS LIST ──────────────────────────────── */
+.person-list { display: flex; flex-direction: column; gap: 6px; }
+
+.person-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 8px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  font-family: var(--mono);
+  font-size: 11px;
+}
+
+.person-avatar {
+  width: 26px;
+  height: 26px;
+  background: rgba(0,201,167,0.15);
+  border: 1px solid rgba(0,201,167,0.3);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  flex-shrink: 0;
+}
+
+.person-name { flex: 1; color: var(--text2); letter-spacing: 0.5px; }
+
+/* ── MODAL ───────────────────────────────────────────── */
+.modal-bg {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(8,15,23,0.85);
+  z-index: 1000;
+  align-items: center;
+  justify-content: center;
+  backdrop-filter: blur(4px);
+}
+
+.modal-bg.show { display: flex; }
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 8px;
+  padding: 24px;
+  max-width: 400px;
+  width: 90%;
+  animation: modalIn 0.2s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: scale(0.96); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+.modal-title {
+  font-size: 15px;
+  font-weight: 700;
+  margin-bottom: 8px;
+}
+
+.modal-sub {
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--text2);
+  letter-spacing: 0.5px;
+  margin-bottom: 16px;
+}
+
+.modal-img {
+  width: 100%;
+  aspect-ratio: 16/9;
+  object-fit: cover;
+  border-radius: 4px;
+  background: var(--surface3);
+  margin-bottom: 16px;
+  border: 1px solid var(--border);
+}
+
+.modal-actions { display: flex; gap: 8px; margin-top: 12px; }
+
+/* ── TOAST ───────────────────────────────────────────── */
+.toast-wrap {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 2000;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.toast {
+  padding: 11px 16px;
+  border-radius: var(--radius);
+  border: 1px solid;
+  font-family: var(--mono);
+  font-size: 11px;
+  letter-spacing: 0.5px;
+  max-width: 300px;
+  animation: toastIn 0.3s ease;
+  background: var(--surface);
+}
+
+@keyframes toastIn {
+  from { opacity: 0; transform: translateX(16px); }
+  to   { opacity: 1; transform: translateX(0); }
+}
+
+.toast.success { border-color: var(--green);  color: var(--green2); }
+.toast.error   { border-color: var(--red);    color: var(--red2); }
+.toast.warning { border-color: var(--amber);  color: var(--amber2); }
+.toast.info    { border-color: var(--blue);   color: var(--blue2); }
+
+/* ── DIVIDER ─────────────────────────────────────────── */
+.divider { height: 1px; background: var(--border); margin: 0 -16px; }
+
+/* Scrollbar for alert list */
+.alert-list::-webkit-scrollbar { width: 3px; }
+.alert-list::-webkit-scrollbar-thumb { background: var(--border2); }
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="logo">
+    <div class="logo-mark"></div>
+    <span class="logo-name">FogSec</span>
+    <span class="logo-tag">LIVE</span>
+  </div>
+  <div class="header-right">
+    <div class="header-stat"><div class="status-led" id="camLed"></div>Camera</div>
+    <div class="header-stat"><div class="status-led" id="sensorLed"></div>ESP32</div>
+    <div class="header-stat"><div class="status-led warn" id="aqiLed"></div>AQI</div>
+    <div class="clock" id="clock">--:--:--</div>
+  </div>
+</header>
+
+<!-- ALERT STRIP -->
+<div class="alert-strip" id="alertStrip">
+  <div class="alert-blink"></div>
+  <span id="alertStripText">ALERT</span>
+  <span style="margin-left:auto;cursor:pointer;color:var(--gray2)" onclick="dismissStrip()">✕</span>
+</div>
+
+<!-- MAIN -->
+<div class="main">
+
+  <!-- ── LEFT COLUMN ───────────────────────── -->
+  <div class="col">
+
+    <!-- Stats -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Overview</span>
+        <span class="section-badge badge-gray" id="uptimeBadge">00:00:00</span>
+      </div>
+      <div class="stat-grid">
+        <div class="stat-card">
+          <div class="stat-num" id="sKnown" style="color:var(--teal)">0</div>
+          <div class="stat-lbl">Known</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="sVisitors" style="color:var(--blue)">0</div>
+          <div class="stat-lbl">Visitors</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="sSuspicious" style="color:var(--amber)">0</div>
+          <div class="stat-lbl">Suspicious</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="sIntruders" style="color:var(--red)">0</div>
+          <div class="stat-lbl">Intruders</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="sAnomalies" style="color:var(--red)">0</div>
+          <div class="stat-lbl">Anomalies</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-num" id="sTotal" style="color:var(--gray2)">0</div>
+          <div class="stat-lbl">Events</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Environment -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Environment — DHT22</span>
+        <span class="section-badge" id="sensorBadge" style="background:rgba(61,85,104,0.3);color:var(--gray2);border:1px solid var(--border2);">OFFLINE</span>
+      </div>
+      <div class="sensor-cards">
+        <div class="sensor-card" style="--accent: var(--red2)">
+          <div class="sensor-label">Temperature</div>
+          <div class="sensor-value" id="tempVal" style="color:var(--red2)">--<span class="sensor-unit">°C</span></div>
+          <div class="sensor-sub" id="tempSub">Waiting for sensor...</div>
+        </div>
+        <div class="sensor-card" style="--accent: var(--blue)">
+          <div class="sensor-label">Humidity</div>
+          <div class="sensor-value" id="humVal" style="color:var(--blue)">--<span class="sensor-unit">%</span></div>
+          <div class="sensor-sub" id="humSub">Waiting for sensor...</div>
+        </div>
+        <div class="sensor-card" style="--accent: var(--amber)">
+          <div class="sensor-label">Heat Index</div>
+          <div class="sensor-value" id="hiVal" style="color:var(--amber)">--<span class="sensor-unit">°C</span></div>
+          <div class="sensor-sub" id="hiSub">Perceived temperature</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Chart -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Sensor History</span>
+        <span class="section-badge badge-teal">LIVE</span>
+      </div>
+      <div class="chart-wrap">
+        <canvas id="sensorChart"></canvas>
+      </div>
+    </div>
+
+    <!-- Known Persons -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Authorized Persons</span>
+        <span class="section-badge badge-teal" id="authBadge">0</span>
+      </div>
+      <div class="person-list" id="personList"></div>
+      <div style="display:flex;gap:6px;margin-top:10px;">
+        <input class="input-field" id="newPersonInput" placeholder="Add name..." style="flex:1">
+        <button class="btn btn-teal" onclick="addPerson()">Add</button>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CENTER COLUMN ──────────────────────── -->
+  <div class="col">
+
+    <!-- Camera -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Live Camera Feed</span>
+        <span class="section-badge badge-red" id="camBadge">OFFLINE</span>
+      </div>
+      <div class="camera-wrap">
+        <img id="cameraFeed" src="" alt="" style="display:none">
+        <div class="camera-offline" id="cameraOffline">
+          <span style="font-size:24px">📷</span>
+          <span>Camera not connected</span>
+          <span style="font-size:9px;color:var(--gray)">Start fog_bridge.py to enable</span>
+        </div>
+        <div class="camera-overlay">
+          <div class="camera-corner tl"></div>
+          <div class="camera-corner tr"></div>
+          <div class="camera-corner bl"></div>
+          <div class="camera-corner br"></div>
+          <div class="cam-status"><div class="cam-status-dot"></div>REC</div>
+          <div class="cam-label">CAM-01 / MAIN ENTRY</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Alert Log -->
+    <div class="section" style="flex:1">
+      <div class="section-header">
+        <span class="section-title">Alert Log</span>
+        <span class="section-badge badge-gray" id="logBadge">0</span>
+      </div>
+      <div class="alert-filter-bar">
+        <button class="filter-btn active" onclick="setFilter('ALL',this)">All</button>
+        <button class="filter-btn" onclick="setFilter('CRITICAL',this)">Critical</button>
+        <button class="filter-btn" onclick="setFilter('WARNING',this)">Warning</button>
+        <button class="filter-btn" onclick="setFilter('SENSOR',this)">Sensor</button>
+        <button class="filter-btn" onclick="setFilter('INFO',this)">Info</button>
+      </div>
+      <div class="alert-list" id="alertList"></div>
+    </div>
+
+    <!-- Snapshot Gallery -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Activity Snapshots</span>
+        <span class="section-badge badge-amber" id="snapBadge">0</span>
+      </div>
+      <div class="snap-grid" id="snapGrid">
+        <div style="grid-column:1/-1;text-align:center;padding:20px;font-family:var(--mono);font-size:10px;color:var(--gray2)">
+          No snapshots yet
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── RIGHT COLUMN ───────────────────────── -->
+  <div class="col">
+
+    <!-- AQI -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">Air Quality Index</span>
+        <span class="section-badge badge-gray" id="aqiBadge">--</span>
+      </div>
+      <div class="aqi-display">
+        <div>
+          <div class="aqi-number" id="aqiNum">--</div>
+        </div>
+        <div>
+          <div class="aqi-label">AQI LEVEL</div>
+          <div class="aqi-cat" id="aqiCat">Fetching...</div>
+          <div style="font-family:var(--mono);font-size:9px;color:var(--gray2);margin-top:3px" id="aqiTs">--</div>
+        </div>
+      </div>
+      <div class="aqi-components" id="aqiComps"></div>
+    </div>
+
+    <!-- Weather + ML -->
+    <div class="section">
+      <div class="section-header">
+        <span class="section-title">ML Weather Forecast</span>
+        <span class="section-badge badge-blue">PREDICTIVE</span>
+      </div>
+
+      <div class="advisory-box" id="advisoryBox">
+        <div class="advisory-text" id="advisoryText">Waiting for sensor data to build forecast...</div>
+      </div>
+
+      <div class="forecast-row" id="forecastRow"></div>
+
+      <div class="score-bar-wrap">
+        <div class="score-bar-label">
+          <span>Go-Outside Score</span>
+          <span id="goOutVal">--</span>
+        </div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" id="goOutBar" style="width:0%;background:var(--green)"></div>
+        </div>
+        <div class="score-bar-label">
+          <span>Temp Trend /hr</span>
+          <span id="trendVal">--</span>
+        </div>
+        <div class="score-bar-track">
+          <div class="score-bar-fill" id="trendBar" style="width:50%;background:var(--amber)"></div>
+        </div>
+        <div class="score-bar-label" style="margin-top:4px">
+          <span style="color:var(--gray2);font-size:8px">Model: Linear Regression on live readings</span>
+          <span style="color:var(--gray2);font-size:8px" id="r2Val"></span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Unknown Person Review -->
+    <div class="section" style="flex:1">
+      <div class="section-header">
+        <span class="section-title">Pending Review</span>
+        <span class="section-badge badge-amber" id="pendingBadge">0</span>
+      </div>
+      <div id="pendingList" style="display:flex;flex-direction:column;gap:8px;">
+        <div style="font-family:var(--mono);font-size:10px;color:var(--gray2);text-align:center;padding:16px;">
+          No persons pending review
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- MODAL -->
+<div class="modal-bg" id="modal">
+  <div class="modal">
+    <div class="modal-title" id="modalTitle">Review Person</div>
+    <div class="modal-sub" id="modalSub">Snapshot captured — please review</div>
+    <img class="modal-img" id="modalImg" src="" alt="Snapshot">
+    <div style="font-family:var(--mono);font-size:10px;color:var(--text2);margin-bottom:8px;">
+      Do you recognise this person?
+    </div>
+    <input class="input-field" id="modalName" placeholder="Enter name to authorise...">
+    <div class="modal-actions">
+      <button class="btn btn-teal" onclick="modalAuthorise()" style="flex:1">✓ Authorise</button>
+      <button class="btn btn-red"  onclick="modalFlag()"      style="flex:1">⚑ Flag as Threat</button>
+      <button class="btn btn-ghost" onclick="closeModal()">Skip</button>
+    </div>
+  </div>
+</div>
+
+<!-- TOASTS -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+// ═══════════════════════════════════════════════════════
+//  FogSec Dashboard — Client Logic
+// ═══════════════════════════════════════════════════════
+
+const socket = io();
+let allAlerts   = [];
+let allSnaps    = [];
+let pendingSnaps = [];
+let activeFilter = 'ALL';
+let modalSnap    = null;
+let uptime       = 0;
+let chart        = null;
+
+// ── CLOCK ─────────────────────────────────────────────
+setInterval(() => {
+  document.getElementById('clock').textContent =
+    new Date().toTimeString().slice(0,8);
+  uptime++;
+  const h = String(Math.floor(uptime/3600)).padStart(2,'0');
+  const m = String(Math.floor((uptime%3600)/60)).padStart(2,'0');
+  const s = String(uptime%60).padStart(2,'0');
+  document.getElementById('uptimeBadge').textContent = `${h}:${m}:${s}`;
+}, 1000);
+
+// ── CHART ─────────────────────────────────────────────
+function initChart() {
+  const ctx = document.getElementById('sensorChart').getContext('2d');
+  chart = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels: [],
+      datasets: [
+        { label: 'Temp °C', data: [], borderColor: '#ff6b78',
+          backgroundColor: 'rgba(255,107,120,0.06)', borderWidth: 1.5,
+          pointRadius: 0, tension: 0.4, fill: true },
+        { label: 'Humidity %', data: [], borderColor: '#3b9eff',
+          backgroundColor: 'rgba(59,158,255,0.06)', borderWidth: 1.5,
+          pointRadius: 0, tension: 0.4, fill: true },
+      ]
+    },
+    options: {
+      animation: false,
+      responsive: true, maintainAspectRatio: false,
+      interaction: { mode: 'index', intersect: false },
+      plugins: {
+        legend: { labels: { color: '#5a7890', font: { family: 'Geist Mono', size: 9 },
+          boxWidth: 10, padding: 8 } },
+        tooltip: { backgroundColor: 'rgba(13,21,32,0.95)', borderColor: '#1e2f40',
+          borderWidth: 1, titleColor: '#00c9a7', bodyColor: '#e0edf6',
+          titleFont: { family: 'Geist Mono', size: 9 },
+          bodyFont:  { family: 'Geist Mono', size: 9 } }
+      },
+      scales: {
+        x: { ticks: { color: '#3d5568', font: { family: 'Geist Mono', size: 8 }, maxTicksLimit: 6 },
+             grid: { color: 'rgba(30,47,64,0.6)' }, border: { color: 'var(--border)' } },
+        y: { ticks: { color: '#3d5568', font: { family: 'Geist Mono', size: 8 } },
+             grid: { color: 'rgba(30,47,64,0.6)' }, border: { color: 'var(--border)' } }
+      }
+    }
+  });
+}
+
+// ── SOCKET EVENTS ─────────────────────────────────────
+socket.on('connect', () => {
+  toast('Connected to FogSec server', 'info');
+  document.getElementById('camLed').className = 'status-led';
+});
+
+socket.on('disconnect', () => {
+  toast('Disconnected from server', 'error');
+});
+
+socket.on('init_state', (data) => {
+  if (data.alerts)    { allAlerts = data.alerts; renderAlerts(); }
+  if (data.snapshots) { allSnaps  = data.snapshots; renderSnaps(); }
+  if (data.known_persons) renderPersons(data.known_persons);
+  if (data.stats)     renderStats(data.stats);
+  if (data.history)   updateChart(data.history);
+  if (data.sensor && data.sensor.temp !== null) updateSensor(data.sensor);
+  uptime = data.uptime || 0;
+});
+
+socket.on('sensor_update', (data) => {
+  updateSensor(data);
+  if (data.history) updateChart(data.history);
+  if (data.prediction) updatePrediction(data.prediction);
+  document.getElementById('sensorLed').className = 'status-led';
+  document.getElementById('sensorBadge').textContent = 'LIVE';
+  document.getElementById('sensorBadge').className   = 'section-badge badge-teal';
+});
+
+socket.on('sensor_offline', () => {
+  document.getElementById('sensorLed').className = 'status-led off';
+  document.getElementById('sensorBadge').textContent = 'OFFLINE';
+  document.getElementById('sensorBadge').className   = 'section-badge badge-gray';
+  toast('ESP32 sensor offline', 'warning');
+});
+
+socket.on('camera_frame', (data) => {
+  const img = document.getElementById('cameraFeed');
+  img.src   = 'data:image/jpeg;base64,' + data.frame;
+  img.style.display = 'block';
+  document.getElementById('cameraOffline').style.display = 'none';
+  document.getElementById('camBadge').textContent  = 'LIVE';
+  document.getElementById('camBadge').className    = 'section-badge badge-teal';
+  document.getElementById('camLed').className = 'status-led';
+});
+
+socket.on('camera_offline', () => {
+  document.getElementById('cameraOffline').style.display = 'flex';
+  document.getElementById('cameraFeed').style.display    = 'none';
+  document.getElementById('camBadge').textContent = 'OFFLINE';
+  document.getElementById('camBadge').className   = 'section-badge badge-gray';
+  document.getElementById('camLed').className = 'status-led off';
+});
+
+socket.on('new_alert', (alert) => {
+  allAlerts.unshift(alert);
+  if (allAlerts.length > 200) allAlerts.pop();
+  renderAlerts();
+  if (alert.type === 'error' || alert.level === 'CRITICAL') {
+    showStrip(alert.message);
+    toast(alert.message, 'error');
+  }
+});
+
+socket.on('aqi_update', (data) => {
+  updateAQI(data);
+  document.getElementById('aqiLed').className = 'status-led';
+});
+
+socket.on('person_authorised', (data) => {
+  allSnaps = allSnaps.map(s => s.id === data.snap_id ? {...s, resolved:true, name:data.name} : s);
+  pendingSnaps = pendingSnaps.filter(s => s.id !== data.snap_id);
+  renderSnaps(); renderPending();
+  toast(`✓ Authorised as ${data.name}`, 'success');
+});
+
+socket.on('person_flagged', (data) => {
+  allSnaps = allSnaps.map(s => s.id === data.snap_id ? {...s, resolved:true, threat:'FLAGGED'} : s);
+  pendingSnaps = pendingSnaps.filter(s => s.id !== data.snap_id);
+  renderSnaps(); renderPending();
+  toast('⚑ Person flagged as threat', 'error');
+});
+
+// ── SENSOR DISPLAY ────────────────────────────────────
+function updateSensor(d) {
+  const temp = d.temp ?? d.temperature;
+  const hum  = d.humidity;
+  const hi   = d.heat_index;
+  if (temp == null) return;
+
+  document.getElementById('tempVal').innerHTML = `${temp.toFixed(1)}<span class="sensor-unit">°C</span>`;
+  document.getElementById('humVal').innerHTML  = `${hum.toFixed(1)}<span class="sensor-unit">%</span>`;
+  document.getElementById('hiVal').innerHTML   = `${hi.toFixed(1)}<span class="sensor-unit">°C</span>`;
+
+  const feel = hi > temp + 3 ? `Feels ${(hi-temp).toFixed(1)}° hotter` : 'Within normal range';
+  document.getElementById('tempSub').textContent = temp > 35 ? '⚠ High temperature' : 'Normal range';
+  document.getElementById('humSub').textContent  = hum > 80 ? '⚠ High humidity' : 'Normal range';
+  document.getElementById('hiSub').textContent   = feel;
+}
+
+function updateChart(h) {
+  if (!chart) return;
+  chart.data.labels             = h.labels;
+  chart.data.datasets[0].data  = h.temps;
+  chart.data.datasets[1].data  = h.hums;
+  chart.update('none');
+}
+
+// ── ML PREDICTION ─────────────────────────────────────
+function updatePrediction(p) {
+  if (p.status !== 'ok') return;
+
+  const advisory = document.getElementById('advisoryBox');
+  const colors = { '🟢':  'var(--green)', '🟡': 'var(--amber)',
+                   '🟠':  'var(--amber)',  '🔴': 'var(--red)',  '🔵': 'var(--blue)' };
+  const firstChar = p.advisory[0];
+  const color  = colors[firstChar] || 'var(--green)';
+  advisory.style.setProperty('--advisory-color', color);
+  document.getElementById('advisoryText').textContent = p.advisory;
+
+  // Forecasts
+  const row = document.getElementById('forecastRow');
+  row.innerHTML = (p.forecasts || []).map(f => `
+    <div class="forecast-chip">
+      <div class="fc-hour">${f.hour}</div>
+      <div class="fc-temp">${f.temp}°</div>
+    </div>
+  `).join('');
+
+  // Score bar
+  const score = p.go_out_score;
+  const barCol = score > 70 ? 'var(--green)' : score > 40 ? 'var(--amber)' : 'var(--red)';
+  document.getElementById('goOutVal').textContent = `${score}/100`;
+  document.getElementById('goOutBar').style.width      = score + '%';
+  document.getElementById('goOutBar').style.background = barCol;
+
+  const tph = p.trend_per_h;
+  document.getElementById('trendVal').textContent = `${tph > 0 ? '+' : ''}${tph}°/hr`;
+  const trendPct = Math.min(100, Math.max(0, 50 + tph * 10));
+  document.getElementById('trendBar').style.width = trendPct + '%';
+
+  document.getElementById('r2Val').textContent = `R²=${p.r_squared}`;
+}
+
+// ── AQI ───────────────────────────────────────────────
+function updateAQI(d) {
+  const colors = { 1:'var(--green)',2:'var(--teal)',3:'var(--amber)',4:'var(--red)',5:'var(--red)' };
+  const col = colors[d.aqi] || 'var(--gray2)';
+
+  document.getElementById('aqiNum').textContent  = d.aqi;
+  document.getElementById('aqiNum').style.color  = col;
+  document.getElementById('aqiCat').textContent  = d.category + (d.demo ? ' (demo)' : '');
+  document.getElementById('aqiCat').style.color  = col;
+  document.getElementById('aqiTs').textContent   = `Updated ${d.ts}`;
+  document.getElementById('aqiBadge').textContent = d.category;
+
+  if (d.components) {
+    document.getElementById('aqiComps').innerHTML = Object.entries(d.components).map(([k,v]) => `
+      <div class="aqi-comp">
+        <div class="aqi-comp-name">${k.toUpperCase()}</div>
+        <div class="aqi-comp-value">${v} <span style="font-size:9px;color:var(--gray2)">μg/m³</span></div>
+      </div>
+    `).join('');
+  }
+}
+
+// ── ALERTS ────────────────────────────────────────────
+const levelColors = { CRITICAL:'var(--red)', WARNING:'var(--amber)', INFO:'var(--blue)', SENSOR:'var(--teal)' };
+
+function renderAlerts() {
+  const list = document.getElementById('alertList');
+  const filtered = allAlerts.filter(a =>
+    activeFilter === 'ALL' || a.level === activeFilter
+  ).slice(0, 100);
+
+  document.getElementById('logBadge').textContent = allAlerts.length;
+  list.innerHTML = filtered.map(a => `
+    <div class="alert-item ${a.level === 'CRITICAL' ? 'critical' : ''}">
+      <span class="alert-ts">${a.ts.slice(11,19)}</span>
+      <span class="alert-lvl lvl-${a.level.toLowerCase()}">${a.level}</span>
+      <span class="alert-msg">${a.source}: ${a.message}</span>
+      <span class="alert-del" onclick="dismissAlert('${a.id}')">✕</span>
+    </div>
+  `).join('') || '<div style="text-align:center;padding:20px;font-family:var(--mono);font-size:10px;color:var(--gray2)">No events</div>';
+}
+
+function setFilter(f, btn) {
+  activeFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  renderAlerts();
+}
+
+function dismissAlert(id) {
+  socket.emit('dismiss_alert', { id });
+  allAlerts = allAlerts.filter(a => a.id !== id);
+  renderAlerts();
+}
+
+// ── SNAPSHOTS ─────────────────────────────────────────
+const threatColors = {
+  INTRUDER: 'var(--red)', SUSPICIOUS: 'var(--amber)', FLAGGED: 'var(--red)', UNKNOWN: 'var(--gray2)'
+};
+
+function renderSnaps() {
+  const grid = document.getElementById('snapGrid');
+  document.getElementById('snapBadge').textContent = allSnaps.length;
+  const unresolved = allSnaps.filter(s => !s.resolved);
+
+  // Update pending queue too
+  pendingSnaps = unresolved;
+  renderPending();
+
+  if (!allSnaps.length) {
+    grid.innerHTML = '<div style="grid-column:1/-1;text-align:center;padding:20px;font-family:var(--mono);font-size:10px;color:var(--gray2)">No snapshots yet</div>';
+    return;
+  }
+
+  grid.innerHTML = allSnaps.slice(0,12).map(s => `
+    <div class="snap-card ${s.resolved?'resolved':''} ${s.threat==='FLAGGED'?'flagged':''}"
+         onclick="openModal('${s.id}')">
+      <div class="snap-img">
+        ${s.b64 ? `<img src="data:image/jpeg;base64,${s.b64}" alt="snap">` : '📷'}
+      </div>
+      <div class="snap-info">
+        <div class="snap-threat" style="color:${threatColors[s.threat]||'var(--gray2)'}">
+          ${s.threat} ${s.resolved ? (s.name ? `→ ${s.name}` : '✓') : ''}
+        </div>
+        <div class="snap-ts">${s.ts}</div>
+      </div>
+    </div>
+  `).join('');
+}
+
+// ── PENDING REVIEW ────────────────────────────────────
+function renderPending() {
+  const list = document.getElementById('pendingList');
+  const pending = allSnaps.filter(s => !s.resolved);
+  document.getElementById('pendingBadge').textContent = pending.length;
+
+  if (!pending.length) {
+    list.innerHTML = '<div style="font-family:var(--mono);font-size:10px;color:var(--gray2);text-align:center;padding:16px;">No persons pending review</div>';
+    return;
+  }
+
+  list.innerHTML = pending.slice(0,5).map(s => `
+    <div style="background:var(--surface2);border:1px solid var(--border);border-radius:var(--radius);padding:12px;">
+      <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;">
+        <span style="font-family:var(--mono);font-size:10px;color:${threatColors[s.threat]||'var(--gray2)'}">
+          ${s.threat}
+        </span>
+        <span style="font-family:var(--mono);font-size:9px;color:var(--gray2)">${s.ts.slice(11,19)}</span>
+      </div>
+      <div style="font-family:var(--mono);font-size:10px;color:var(--amber);margin-bottom:8px;">
+        Do you recognise this person?
+      </div>
+      <div style="display:flex;gap:6px;align-items:center;">
+        <input class="input-field" id="pName_${s.id}" placeholder="Enter name..." style="flex:1">
+        <button class="btn btn-teal" onclick="quickAuth('${s.id}')">✓</button>
+        <button class="btn btn-red"  onclick="quickFlag('${s.id}')">⚑</button>
+      </div>
+    </div>
+  `).join('');
+}
+
+function quickAuth(snapId) {
+  const input = document.getElementById(`pName_${snapId}`);
+  const name  = input ? input.value.trim() : '';
+  if (!name) { toast('Enter a name first', 'warning'); return; }
+  socket.emit('authorise_person', { snap_id: snapId, name });
+}
+
+function quickFlag(snapId) {
+  socket.emit('flag_person', { snap_id: snapId, description: 'Flagged via dashboard' });
+}
+
+// ── MODAL ─────────────────────────────────────────────
+function openModal(snapId) {
+  modalSnap = allSnaps.find(s => s.id === snapId);
+  if (!modalSnap) return;
+  document.getElementById('modalTitle').textContent = `Review — ${modalSnap.threat}`;
+  document.getElementById('modalSub').textContent   = `Captured: ${modalSnap.ts}`;
+  document.getElementById('modalImg').src = modalSnap.b64
+    ? `data:image/jpeg;base64,${modalSnap.b64}` : '';
+  document.getElementById('modalName').value = '';
+  document.getElementById('modal').classList.add('show');
+}
+
+function closeModal() {
+  document.getElementById('modal').classList.remove('show');
+  modalSnap = null;
+}
+
+function modalAuthorise() {
+  if (!modalSnap) return;
+  const name = document.getElementById('modalName').value.trim();
+  if (!name) { toast('Enter a name to authorise', 'warning'); return; }
+  socket.emit('authorise_person', { snap_id: modalSnap.id, name });
+  closeModal();
+}
+
+function modalFlag() {
+  if (!modalSnap) return;
+  socket.emit('flag_person', { snap_id: modalSnap.id, description: 'Flagged via modal' });
+  closeModal();
+}
+
+document.getElementById('modal').addEventListener('click', (e) => {
+  if (e.target === document.getElementById('modal')) closeModal();
+});
+
+// ── PERSONS ───────────────────────────────────────────
+function renderPersons(names) {
+  const list = document.getElementById('personList');
+  document.getElementById('authBadge').textContent = names.length;
+  list.innerHTML = names.map(n => `
+    <div class="person-item">
+      <div class="person-avatar">👤</div>
+      <span class="person-name">${n}</span>
+      <span class="section-badge badge-teal">AUTH</span>
+    </div>
+  `).join('') || '<div style="font-family:var(--mono);font-size:10px;color:var(--gray2);padding:8px;">No persons registered</div>';
+}
+
+function addPerson() {
+  const input = document.getElementById('newPersonInput');
+  const name  = input.value.trim();
+  if (!name) return;
+  socket.emit('add_person', { name });
+  input.value = '';
+  toast(`Added ${name} to authorized persons`, 'success');
+}
+
+// ── STATS ─────────────────────────────────────────────
+function renderStats(s) {
+  document.getElementById('sKnown').textContent     = s.known || 0;
+  document.getElementById('sVisitors').textContent  = s.visitors || 0;
+  document.getElementById('sSuspicious').textContent = s.suspicious || 0;
+  document.getElementById('sIntruders').textContent = s.intruders || 0;
+  document.getElementById('sAnomalies').textContent = s.anomalies || 0;
+  document.getElementById('sTotal').textContent     = s.total_events || 0;
+}
+
+// ── ALERT STRIP ───────────────────────────────────────
+function showStrip(msg) {
+  document.getElementById('alertStripText').textContent = msg;
+  document.getElementById('alertStrip').classList.add('show');
+}
+
+function dismissStrip() {
+  document.getElementById('alertStrip').classList.remove('show');
+}
+
+// ── TOAST ─────────────────────────────────────────────
+function toast(msg, type='info', dur=4000) {
+  const wrap = document.getElementById('toastWrap');
+  const el   = document.createElement('div');
+  el.className  = `toast ${type}`;
+  el.textContent = msg;
+  wrap.appendChild(el);
+  setTimeout(() => { el.style.opacity='0'; el.style.transform='translateX(16px)';
+    el.style.transition='0.3s'; setTimeout(()=>el.remove(),300); }, dur);
+}
+
+// ── INIT ──────────────────────────────────────────────
+initChart();
+
+// Fetch initial state via REST
+fetch('/api/state').then(r=>r.json()).then(data => {
+  if (data.alerts)    { allAlerts = data.alerts; renderAlerts(); }
+  if (data.snapshots) { allSnaps  = data.snapshots; renderSnaps(); }
+  if (data.known_persons) renderPersons(data.known_persons);
+  if (data.stats)     renderStats(data.stats);
+  if (data.history)   updateChart(data.history);
+  if (data.prediction) updatePrediction(data.prediction);
+  if (data.sensor && data.sensor.temp) updateSensor(data.sensor);
+  uptime = data.uptime || 0;
+}).catch(() => toast('Could not fetch initial state', 'warning'));
+</script>
+</body>
+</html>

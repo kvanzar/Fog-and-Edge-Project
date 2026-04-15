@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fog/Edge Command Center</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --bg-color: #f1f5f9;
+            --card-bg: #ffffff;
+            --text-main: #0f172a;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --success: #10b981;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-main);
+            margin: 0;
+            padding: 0;
+        }
+        
+        /* Top Navigation Bar */
+        .navbar {
+            background: var(--card-bg);
+            padding: 1rem 2rem;
+            border-bottom: 1px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+        }
+        .navbar h1 { margin: 0; font-size: 1.25rem; font-weight: 600; letter-spacing: -0.025em; }
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: #065f46;
+            background: #d1fae5;
+            padding: 0.35rem 0.75rem;
+            border-radius: 9999px;
+        }
+        .status-dot { width: 8px; height: 8px; background: var(--success); border-radius: 50%; box-shadow: 0 0 8px var(--success); }
+
+        /* Main Grid Layout */
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 0 2rem;
+            display: grid;
+            grid-template-columns: 2.5fr 1fr;
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 3px 0 rgba(0,0,0,0.1), 0 1px 2px -1px rgba(0,0,0,0.1);
+        }
+        .card-header {
+            font-size: 1rem;
+            font-weight: 600;
+            margin-bottom: 1.25rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Top Sensor Metrics */
+        .metrics-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem;
+            margin-bottom: 1.5rem;
+        }
+        .metric-card {
+            background: var(--card-bg);
+            padding: 1.25rem;
+            border-radius: 12px;
+            border: 1px solid var(--border);
+            box-shadow: 0 1px 2px 0 rgba(0,0,0,0.05);
+        }
+        .metric-label { font-size: 0.75rem; font-weight: 600; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+        .metric-value { font-size: 1.75rem; font-weight: 700; color: var(--text-main); }
+
+        /* Camera Section */
+        .video-container {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid var(--border);
+        }
+        .video-container img {
+            width: 100%;
+            max-height: 550px;
+            display: block;
+            object-fit: cover;
+        }
+        
+        .suggestion-banner {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-left: 4px solid #3b82f6;
+            padding: 1rem;
+            border-radius: 6px;
+            font-size: 0.875rem;
+            color: #334155;
+            margin-top: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        /* Alert Log Sidebar */
+        .alert-list {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+            max-height: 700px;
+            overflow-y: auto;
+            padding-right: 0.5rem;
+        }
+        .alert-item {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            padding: 0.75rem;
+            background: #f8fafc;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            transition: all 0.2s;
+        }
+        .alert-item:hover { border-color: #cbd5e1; background: #fff; }
+        .alert-img { width: 48px; height: 48px; border-radius: 6px; object-fit: cover; border: 1px solid var(--border); }
+        .alert-content { flex: 1; }
+        .alert-title { font-weight: 600; font-size: 0.875rem; margin-bottom: 0.25rem; }
+        .alert-time { font-size: 0.75rem; color: var(--text-muted); }
+        .alert-actions { display: flex; flex-direction: column; gap: 0.35rem; }
+
+        .btn {
+            padding: 0.35rem 0.5rem;
+            font-size: 0.7rem;
+            font-weight: 600;
+            border-radius: 4px;
+            border: none;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .btn-known { background: #e0f2fe; color: #0284c7; }
+        .btn-known:hover { background: #bae6fd; }
+        .btn-flag { background: #fee2e2; color: #dc2626; }
+        .btn-flag:hover { background: #fecaca; }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar { width: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+    </style>
+</head>
+<body>
+
+<nav class="navbar">
+    <h1>Fog/Edge Command Center</h1>
+    <div class="status-badge">
+        <span class="status-dot"></span> System Online
+    </div>
+</nav>
+
+<div class="container">
+    <div class="main-column">
+        
+        <div class="metrics-grid">
+            <div class="metric-card">
+                <div class="metric-label">Temperature</div>
+                <div class="metric-value"><span id="val-temp">--</span>°C</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Humidity</div>
+                <div class="metric-value"><span id="val-hum">--</span>%</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">Outdoor AQI</div>
+                <div class="metric-value" id="val-aqi">--</div>
+            </div>
+            <div class="metric-card">
+                <div class="metric-label">1-Hour Forecast</div>
+                <div class="metric-value"><span id="val-pred">--</span>°C</div>
+            </div>
+        </div>
+
+        <div class="card" style="padding: 1rem;">
+            <div class="card-header" style="margin-bottom: 0.75rem; padding-left: 0.5rem;">
+                Live Security Feed
+            </div>
+            <div class="video-container">
+                <img src="/video_feed" alt="Camera Feed Offline" onerror="this.src=''">
+            </div>
+            <div class="suggestion-banner">
+                <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                <span id="val-sugg">Processing AI environmental suggestions...</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="side-column">
+        <div class="card">
+            <div class="card-header">
+                Activity Log
+                <span style="font-size: 0.75rem; font-weight: 500; color: var(--text-muted);">Auto-updating</span>
+            </div>
+            <div class="alert-list" id="alerts-container">
+                </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    async function updateDashboard() {
+        try {
+            const res = await fetch('/api/data');
+            if (!res.ok) throw new Error("HTTP error");
+            const data = await res.json();
+            
+            document.getElementById('val-temp').innerText = data.temperature;
+            document.getElementById('val-hum').innerText = data.humidity;
+            document.getElementById('val-aqi').innerText = data.aqi;
+            document.getElementById('val-pred').innerText = data.prediction;
+            document.getElementById('val-sugg').innerText = data.suggestion;
+
+            const container = document.getElementById('alerts-container');
+            container.innerHTML = '';
+
+            if (!data.alerts || data.alerts.length === 0) {
+                container.innerHTML = '<p style="color: #94a3b8; text-align: center; font-size: 0.875rem; padding: 2rem 0;">No recent activity detected.</p>';
+                return;
+            }
+
+            data.alerts.forEach(alert => {
+                const item = document.createElement('div');
+                item.className = 'alert-item';
+                
+                const safeType = alert.type || 'Visitor';
+                let textColor = '#d97706'; // Suspicious (Yellow/Orange)
+                if (safeType === 'Intruder') textColor = '#dc2626'; // Red
+                else if (safeType === 'Visitor') textColor = '#0284c7'; // Blue
+                
+                item.innerHTML = `
+                    <img src="/snapshots/${alert.filename}" class="alert-img" alt="Snapshot" onerror="this.style.display='none'">
+                    <div class="alert-content">
+                        <div class="alert-title" style="color: ${textColor};">${safeType}</div>
+                        <div class="alert-time">${alert.time || 'Recent'}</div>
+                    </div>
+                    <div class="alert-actions">
+                        <button class="btn btn-known" onclick="markKnown('${alert.filename}')">Verify</button>
+                        <button class="btn btn-flag" onclick="markUnknown('${alert.filename}')">Ban</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+        } catch (err) {
+            console.error("Dashboard update error:", err);
+        }
+    }
+
+    async function markKnown(filename) {
+        const name = prompt("Enter a name for this verified person:");
+        if (name) {
+            await fetch('/api/mark_known', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ filename, name })
+            });
+            updateDashboard();
+        }
+    }
+
+    async function markUnknown(filename) {
+        if(confirm("Flag this person as an intruder? Image will be purged/banned.")) {
+            await fetch('/api/mark_unknown', {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({ filename })
+            });
+            updateDashboard();
+        }
+    }
+
+    setInterval(updateDashboard, 2000);
+    updateDashboard();
+</script>
+
+</body>
+</html>

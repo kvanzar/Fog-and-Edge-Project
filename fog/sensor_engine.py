@@ -1,11 +1,3 @@
-# ============================================================
-#  fog/sensor_engine.py  —  Sensor Anomaly Detection
-#
-#  Subscribes to MQTT sensor data from ESP32 edge nodes.
-#  Trains an Isolation Forest on live data, then infers
-#  anomaly scores on every incoming reading.
-# ============================================================
-
 import json
 import time
 import logging

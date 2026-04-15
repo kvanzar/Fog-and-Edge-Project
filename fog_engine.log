@@ -1,661 +1,3 @@
-2026-03-08 23:16:59,281  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:16:59,281  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-08 23:16:59,281  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-08 23:16:59,281  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-08 23:16:59,281  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:16:59,281  [SensorEngine  ]  INFO  New Isolation Forest created — waiting for training data.
-2026-03-08 23:16:59,281  [SensorEngine  ]  INFO  Retraining scheduler started (every 300s).
-2026-03-08 23:19:00,295  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:19:00,295  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-08 23:19:00,295  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-08 23:19:00,295  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-08 23:19:00,295  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:19:00,295  [SensorEngine  ]  INFO  New Isolation Forest created — waiting for training data.
-2026-03-08 23:19:00,295  [SensorEngine  ]  INFO  Retraining scheduler started (every 300s).
-2026-03-08 23:19:08,901  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:19:08,901  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-08 23:19:08,901  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-08 23:19:08,901  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-08 23:19:08,901  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:19:08,902  [FogEngine     ]  WARNING  Mosquitto not reachable at localhost:1883 — sensor pipeline skipped. Camera pipeline will still run.
-2026-03-08 23:19:08,902  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-08 23:19:08,902  [FogEngine     ]  INFO  Thread started: Camera guard (YOLO + FaceRec)
-2026-03-08 23:19:08,902  [FogEngine     ]  INFO  All systems running. Press Ctrl+C to stop.
-2026-03-08 23:19:16,483  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-08 23:19:22,012  [CameraGuard   ]  WARNING    No face found in IMG_1129.JPEG — skipping.
-2026-03-08 23:19:22,013  [CameraGuard   ]  INFO  Known faces loaded: []
-2026-03-08 23:19:23,189  [CameraGuard   ]  INFO  Webcam open (640x480). Detection running.
-2026-03-08 23:19:23,259  [CameraGuard   ]  INFO  Camera Guard stopped. Session stats: {'frames_processed': 1, 'persons_detected': 0, 'intruders_detected': 0, 'known_seen': 0}
-2026-03-08 23:24:55,982  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:24:55,982  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-08 23:24:55,982  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-08 23:24:55,982  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-08 23:24:55,982  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:24:55,983  [FogEngine     ]  WARNING  Mosquitto not available at localhost:1883 — sensor pipeline skipped. Camera will still run. ([Errno 61] Connection refused)
-2026-03-08 23:24:55,983  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-08 23:24:55,983  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-08 23:24:55,983  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-08 23:24:56,003  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-08 23:25:01,013  [CameraGuard   ]  WARNING    No face found in IMG_1129.JPEG — skipping.
-2026-03-08 23:25:01,013  [CameraGuard   ]  INFO  Known faces loaded: []
-2026-03-08 23:25:01,931  [CameraGuard   ]  INFO  Webcam open (640x480). Detection running.
-2026-03-08 23:25:02,717  [CameraGuard   ]  INFO  Camera Guard stopped. Session stats: {'frames_processed': 5, 'persons_detected': 1, 'intruders_detected': 1, 'known_seen': 0}
-2026-03-08 23:25:02,717  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-08 23:25:02,717  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-08 23:26:55,294  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:26:55,294  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-08 23:26:55,294  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-08 23:26:55,294  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-08 23:26:55,294  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:26:55,296  [FogEngine     ]  WARNING  Mosquitto not available at localhost:1883 — sensor pipeline skipped. Camera will still run. ([Errno 61] Connection refused)
-2026-03-08 23:26:55,296  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-08 23:26:55,296  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-08 23:26:55,296  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-08 23:26:55,311  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-08 23:27:00,199  [CameraGuard   ]  WARNING    No face found in IMG_1129.JPEG — skipping. Tip: use a clear front-facing photo with good lighting.
-2026-03-08 23:27:00,199  [CameraGuard   ]  INFO  Known faces loaded: []
-2026-03-08 23:27:01,411  [CameraGuard   ]  INFO  Webcam open (640x480). Detection running.
-2026-03-08 23:27:01,825  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 unknown person(s) | Snapshot → fog/intruder_snapshots/intruder_20260308_232701.jpg
-2026-03-08 23:27:11,923  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 unknown person(s) | Snapshot → fog/intruder_snapshots/intruder_20260308_232711.jpg
-2026-03-08 23:27:22,085  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 unknown person(s) | Snapshot → fog/intruder_snapshots/intruder_20260308_232722.jpg
-2026-03-08 23:27:24,778  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-08 23:27:24,820  [CameraGuard   ]  INFO  Camera Guard stopped. Session stats: {'frames_processed': 396, 'persons_detected': 79, 'intruders_detected': 3, 'known_seen': 0}
-2026-03-08 23:27:24,820  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-08 23:27:24,820  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-08 23:31:11,385  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:31:11,385  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-08 23:31:11,385  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-08 23:31:11,385  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-08 23:31:11,385  [FogEngine     ]  INFO  ==============================================================
-2026-03-08 23:31:11,386  [FogEngine     ]  WARNING  Mosquitto not available at localhost:1883 — sensor pipeline skipped. Camera will still run. ([Errno 61] Connection refused)
-2026-03-08 23:31:11,386  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-08 23:31:11,386  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-08 23:31:11,386  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-08 23:31:11,402  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-08 23:31:11,696  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-08 23:31:16,668  [CameraGuard   ]  WARNING    No face found in IMG_1129.JPEG — skipping. Tip: use a clear front-facing photo with good lighting.
-2026-03-08 23:31:16,669  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-08 23:31:17,894  [CameraGuard   ]  INFO  Webcam open (640x480). Detection running.
-2026-03-08 23:31:18,334  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 unknown person(s) | Snapshot → fog/intruder_snapshots/intruder_20260308_233118.jpg
-2026-03-08 23:31:18,906  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:19,218  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:19,516  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:19,814  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:20,117  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:20,420  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:20,714  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:21,015  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:21,310  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:21,624  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:21,921  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:22,213  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:22,513  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:22,816  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:23,111  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:23,414  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:23,722  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:24,000  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:24,276  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:24,585  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:24,882  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:26,681  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:26,984  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:27,883  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:28,489  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:28,782  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:29,078  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:29,386  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:29,683  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:29,978  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:30,290  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:30,582  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:30,887  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:31,181  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:31,482  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:31,786  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:32,085  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:32,384  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:32,685  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:32,979  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:33,284  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:33,579  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:33,890  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:34,185  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:34,487  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:34,781  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:35,087  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:35,380  [CameraGuard   ]  INFO  Known person(s): ['kshitij']
-2026-03-08 23:31:35,436  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-08 23:31:35,483  [CameraGuard   ]  INFO  Camera Guard stopped. Session stats: {'frames_processed': 291, 'persons_detected': 58, 'intruders_detected': 1, 'known_seen': 48}
-2026-03-08 23:31:35,483  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-08 23:31:35,483  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 00:17:12,403  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 00:17:12,403  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 00:17:12,403  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 00:17:12,403  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-09 00:17:12,403  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 00:17:12,404  [FogEngine     ]  WARNING  Mosquitto not available at localhost:1883 — sensor pipeline skipped. Camera will still run. ([Errno 61] Connection refused)
-2026-03-09 00:17:12,404  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 00:17:12,404  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 00:17:12,404  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 00:17:12,423  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 00:17:17,381  [CameraGuard   ]  WARNING    No face found in IMG_1129.JPEG — skipping. Tip: use a clear front-facing photo with good lighting.
-2026-03-09 00:17:17,381  [CameraGuard   ]  INFO  Known faces loaded: []
-2026-03-09 00:17:18,594  [CameraGuard   ]  INFO  Webcam open (640x480). Detection running.
-2026-03-09 00:17:19,102  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 unknown person(s) | Snapshot → fog/intruder_snapshots/intruder_20260309_001719.jpg
-2026-03-09 00:17:28,274  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-09 00:17:28,327  [CameraGuard   ]  INFO  Camera Guard stopped. Session stats: {'frames_processed': 160, 'persons_detected': 33, 'intruders_detected': 1, 'known_seen': 0}
-2026-03-09 00:17:28,327  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-09 00:17:28,327  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 00:18:07,250  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 00:18:07,251  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 00:18:07,251  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 00:18:07,251  [FogEngine     ]  INFO     Pipeline 2 : Intruder Camera (YOLO + FaceRec)
-2026-03-09 00:18:07,251  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 00:18:07,252  [FogEngine     ]  WARNING  Mosquitto not available at localhost:1883 — sensor pipeline skipped. Camera will still run. ([Errno 61] Connection refused)
-2026-03-09 00:18:07,252  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 00:18:07,252  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 00:18:07,252  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 00:18:07,268  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 00:18:07,558  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 00:18:07,559  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-09 00:18:08,673  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
-2026-03-09 00:18:09,047  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:09,302  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:09,578  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:09,847  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:10,111  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:10,380  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:10,650  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:10,953  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_001810.jpg
-2026-03-09 00:18:12,455  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_001812.jpg
-2026-03-09 00:18:13,060  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:17,622  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:17,920  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:18,230  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:18,522  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:18,823  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:19,125  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:19,424  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:19,723  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:20,022  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:20,325  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:20,620  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:20,929  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:21,222  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:21,522  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_001821.jpg
-2026-03-09 00:18:22,423  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:22,725  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:23,023  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:23,324  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:23,623  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:23,909  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:24,191  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:24,488  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:24,791  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:25,090  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:25,391  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 00:18:25,475  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-09 00:18:25,510  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 292, 'persons_detected': 58, 'known_seen': 32, 'visitors': 0, 'suspicious': 1, 'intruders': 2}
-2026-03-09 00:18:25,510  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-09 00:18:25,510  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 13:57:20,836  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 13:57:20,836  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 13:57:20,836  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 13:57:20,836  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
-2026-03-09 13:57:20,836  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
-2026-03-09 13:57:20,836  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 13:57:20,837  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
-2026-03-09 13:57:22,848  [VibrationEngine]  INFO  Serial connected: /dev/tty.usbserial-1130 @ 9600 baud
-2026-03-09 13:57:22,849  [VibrationEngine]  INFO  Vibration engine running.
-2026-03-09 13:57:22,850  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
-2026-03-09 13:57:22,851  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 13:57:22,851  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 13:57:22,851  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 13:57:22,893  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 13:57:23,195  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 13:57:23,195  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-09 13:57:24,353  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
-2026-03-09 13:57:24,740  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_135724.jpg
-2026-03-09 13:57:25,244  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:25,526  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:25,832  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:26,139  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:27,601  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:27,902  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:28,197  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:28,502  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:28,799  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:29,098  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:29,402  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:29,700  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:29,982  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:30,263  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:34,803  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_135734.jpg
-2026-03-09 13:57:46,536  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_135746.jpg
-2026-03-09 13:57:55,904  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:56,201  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:56,502  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:56,803  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:57,077  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:57,364  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:57,670  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:57,972  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:58,268  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:58,565  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_135758.jpg
-2026-03-09 13:57:58,868  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:59,168  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:59,473  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:57:59,766  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:58:00,064  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:58:00,365  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 13:58:00,676  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-09 13:58:00,708  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 660, 'persons_detected': 116, 'known_seen': 29, 'visitors': 3, 'suspicious': 0, 'intruders': 4}
-2026-03-09 13:58:00,708  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-09 13:58:00,708  [VibrationEngine]  ERROR  Serial error: read failed: [Errno 9] Bad file descriptor
-2026-03-09 13:58:01,211  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 14:03:29,953  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 14:03:29,953  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 14:03:29,953  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 14:03:29,953  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
-2026-03-09 14:03:29,953  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
-2026-03-09 14:03:29,953  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 14:03:29,953  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
-2026-03-09 14:03:31,961  [VibrationEngine]  INFO  Serial connected: /dev/tty.usbserial-1130 @ 9600 baud
-2026-03-09 14:03:31,962  [VibrationEngine]  INFO  Vibration engine running.
-2026-03-09 14:03:31,963  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
-2026-03-09 14:03:31,964  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 14:03:31,964  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 14:03:31,964  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 14:03:32,006  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 14:03:32,311  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 14:03:32,311  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-09 14:03:33,403  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
-2026-03-09 14:03:33,813  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_140333.jpg
-2026-03-09 14:03:34,374  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:34,675  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:34,961  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:35,248  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:35,548  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:35,850  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:36,149  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:36,448  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:36,748  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:37,048  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:37,322  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:37,612  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:41,851  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:42,119  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:42,384  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:42,655  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:43,185  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:43,453  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:43,717  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:43,980  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_140343.jpg
-2026-03-09 14:03:44,251  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:44,786  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:45,050  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:45,319  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:46,119  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:46,385  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:46,652  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:46,919  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:47,746  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:48,049  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:48,347  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:48,647  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:48,945  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:49,247  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:54,106  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_140354.jpg
-2026-03-09 14:03:54,715  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:55,274  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 14:03:56,339  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-09 14:03:56,375  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 405, 'persons_detected': 81, 'known_seen': 35, 'visitors': 0, 'suspicious': 0, 'intruders': 3}
-2026-03-09 14:03:56,375  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-09 14:03:56,375  [VibrationEngine]  ERROR  Serial error: read failed: [Errno 9] Bad file descriptor
-2026-03-09 14:03:56,878  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 15:03:17,124  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 15:03:17,124  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 15:03:17,124  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 15:03:17,124  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
-2026-03-09 15:03:17,124  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
-2026-03-09 15:03:17,124  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 15:03:17,125  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
-2026-03-09 15:03:17,125  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:17,125  [VibrationEngine]  WARNING  Vibration engine started without Arduino. Connect Arduino via USB and set SERIAL_PORT in config.py.
-2026-03-09 15:03:17,125  [VibrationEngine]  INFO  Vibration engine running.
-2026-03-09 15:03:17,125  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
-2026-03-09 15:03:17,126  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 15:03:17,126  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 15:03:17,126  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 15:03:17,147  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 15:03:17,444  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 15:03:17,444  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-09 15:03:18,603  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
-2026-03-09 15:03:18,980  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:18,981  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150318.jpg
-2026-03-09 15:03:19,253  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:19,534  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_150319.jpg
-2026-03-09 15:03:20,735  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:21,309  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:22,131  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:23,057  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:23,335  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:23,640  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:23,938  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:26,002  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:27,136  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:28,073  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:28,371  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:28,673  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:28,974  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:29,271  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:29,571  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:29,869  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:30,170  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:32,141  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:32,500  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['face covered', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150332.jpg
-2026-03-09 15:03:33,115  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_150333.jpg
-2026-03-09 15:03:37,147  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:42,153  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:42,870  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150342.jpg
-2026-03-09 15:03:47,155  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:52,161  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:03:53,074  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['face covered', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150353.jpg
-2026-03-09 15:03:54,271  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:54,580  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_150354.jpg
-2026-03-09 15:03:54,875  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:55,171  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:55,479  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:55,776  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:56,377  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:03:57,166  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:02,172  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:07,178  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:12,183  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:17,189  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:18,477  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150418.jpg
-2026-03-09 15:04:22,195  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:27,198  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:32,204  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:33,710  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150433.jpg
-2026-03-09 15:04:37,210  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:41,413  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_150441.jpg
-2026-03-09 15:04:42,216  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:43,817  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:44,117  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:44,715  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150444.jpg
-2026-03-09 15:04:47,222  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:48,322  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:48,615  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:48,923  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:49,220  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:49,517  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:49,819  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:50,121  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:52,221  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:52,227  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:04:52,521  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:52,822  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:53,121  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:53,422  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_150453.jpg
-2026-03-09 15:04:54,918  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['face covered', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150454.jpg
-2026-03-09 15:04:55,516  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:04:55,569  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-09 15:04:55,608  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 1636, 'persons_detected': 482, 'known_seen': 37, 'visitors': 164, 'suspicious': 14, 'intruders': 10}
-2026-03-09 15:04:55,608  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-09 15:04:55,608  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 15:09:35,303  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 15:09:35,303  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 15:09:35,303  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 15:09:35,303  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
-2026-03-09 15:09:35,303  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
-2026-03-09 15:09:35,303  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 15:09:35,304  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
-2026-03-09 15:09:35,304  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:09:35,304  [VibrationEngine]  WARNING  Vibration engine started without Arduino. Connect Arduino via USB and set SERIAL_PORT in config.py.
-2026-03-09 15:09:35,304  [VibrationEngine]  INFO  Vibration engine running.
-2026-03-09 15:09:35,304  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
-2026-03-09 15:09:35,304  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 15:09:35,304  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 15:09:35,304  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 15:09:35,320  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 15:09:35,618  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 15:09:35,618  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-09 15:09:36,750  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
-2026-03-09 15:09:37,143  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150937.jpg
-2026-03-09 15:09:37,701  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:38,280  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:39,485  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:39,781  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:40,089  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:40,309  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:09:40,383  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:40,682  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:40,980  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:41,282  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:41,581  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:42,472  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:42,745  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:43,049  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:43,353  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:43,651  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:43,952  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:44,247  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:44,559  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:44,846  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:45,315  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:09:46,015  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:46,318  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:47,511  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:47,819  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:47,820  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_150947.jpg
-2026-03-09 15:09:48,118  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:49,312  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:49,619  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:09:50,320  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:09:53,724  [CameraGuard   ]  INFO  Register: saved → fog/known_faces/person_20260309_150953.jpg
-2026-03-09 15:09:53,724  [CameraGuard   ]  INFO  Reloading known faces...
-2026-03-09 15:09:54,013  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 15:09:54,046  [CameraGuard   ]  INFO    Loaded face: person_20260309_150953
-2026-03-09 15:09:54,046  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij', 'person_20260309_150953']
-2026-03-09 15:09:54,046  [CameraGuard   ]  INFO  Register: person_20260309_150953 is now a known person.
-2026-03-09 15:09:54,148  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:54,457  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:54,749  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:55,048  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:55,326  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:09:55,347  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:55,656  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:55,949  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:56,252  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:56,551  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:56,850  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:57,151  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:57,436  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:57,715  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:58,018  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:58,320  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:58,618  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:58,921  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:59,218  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:59,525  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:09:59,818  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:00,116  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:00,328  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:10:00,420  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:00,719  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:01,019  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:01,322  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:01,652  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:01,957  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:02,251  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:02,549  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:02,857  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:03,152  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:03,457  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:03,753  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:04,051  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:04,355  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:04,652  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:04,956  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:05,257  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:05,334  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:10:05,527  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:05,528  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_151005.jpg
-2026-03-09 15:10:05,819  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:06,118  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:06,421  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:06,715  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:07,016  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:07,327  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:07,617  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:07,918  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:08,224  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:08,520  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:08,817  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:09,123  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:09,421  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:09,719  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:10,018  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:10,319  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:10,340  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:10:10,624  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:10,918  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:11,222  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:11,519  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:11,819  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:12,119  [CameraGuard   ]  INFO  Known: person_20260309_150953
-2026-03-09 15:10:12,121  [CameraGuard   ]  INFO  Quit key pressed.
-2026-03-09 15:10:12,157  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 585, 'persons_detected': 140, 'known_seen': 87, 'visitors': 18, 'suspicious': 1, 'intruders': 3}
-2026-03-09 15:10:12,157  [FogEngine     ]  INFO  Shutdown signal received.
-2026-03-09 15:10:12,157  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
-2026-03-09 15:22:01,546  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 15:22:01,546  [FogEngine     ]  INFO     Fog Engine — Starting
-2026-03-09 15:22:01,546  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
-2026-03-09 15:22:01,546  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
-2026-03-09 15:22:01,546  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
-2026-03-09 15:22:01,546  [FogEngine     ]  INFO  ==============================================================
-2026-03-09 15:22:01,547  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
-2026-03-09 15:22:01,547  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:22:01,548  [VibrationEngine]  WARNING  Vibration engine started without Arduino. Connect Arduino via USB and set SERIAL_PORT in config.py.
-2026-03-09 15:22:01,548  [VibrationEngine]  INFO  Vibration engine running.
-2026-03-09 15:22:01,548  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
-2026-03-09 15:22:01,548  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
-2026-03-09 15:22:01,548  [FogEngine     ]  INFO  Press Q in the camera window to quit.
-2026-03-09 15:22:01,548  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
-2026-03-09 15:22:01,561  [CameraGuard   ]  INFO  YOLO ready.
-2026-03-09 15:22:01,853  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 15:22:01,853  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij']
-2026-03-09 15:22:02,944  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
-2026-03-09 15:22:03,314  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_152203.jpg
-2026-03-09 15:22:04,389  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:04,655  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:04,964  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:06,159  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:06,459  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:06,549  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:22:06,765  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:07,064  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:11,234  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'group (2 unknowns)'] | Snapshot → fog/intruder_snapshots/suspicious_20260309_152211.jpg
-2026-03-09 15:22:11,555  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:22:14,129  [CameraGuard   ]  INFO  Register: saved → fog/known_faces/person_20260309_152214.jpg
-2026-03-09 15:22:14,129  [CameraGuard   ]  INFO  Reloading known faces...
-2026-03-09 15:22:14,161  [CameraGuard   ]  INFO    Loaded face: person_20260309_152214
-2026-03-09 15:22:14,452  [CameraGuard   ]  INFO    Loaded face: kshitij
-2026-03-09 15:22:14,452  [CameraGuard   ]  INFO  Known faces loaded: ['person_20260309_152214', 'kshitij']
-2026-03-09 15:22:14,452  [CameraGuard   ]  INFO  Register: person_20260309_152214 is now a known person.
-2026-03-09 15:22:14,563  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:14,863  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:15,164  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:15,441  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:15,724  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:16,025  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:16,027  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_152216.jpg
-2026-03-09 15:22:16,561  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:22:16,857  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:17,167  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:17,465  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:17,762  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:18,060  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:20,097  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:20,703  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:20,999  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:21,300  [CameraGuard   ]  INFO  Known: kshitij
-2026-03-09 15:22:21,566  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
-2026-03-09 15:22:25,596  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:25,901  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:26,205  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:26,501  [CameraGuard   ]  INFO  Known: person_20260309_152214
-2026-03-09 15:22:26,572  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
-  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
-  Update SERIAL_PORT in fog/config.py
 2026-03-09 15:22:26,804  [CameraGuard   ]  INFO  Known: person_20260309_152214
 2026-03-09 15:22:26,805  [CameraGuard   ]  WARNING  INTRUDER ALERT | 2 person(s) | Signals: ['group (2 unknowns)', 'face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260309_152226.jpg
 2026-03-09 15:22:28,566  [CameraGuard   ]  INFO  Known: person_20260309_152214
@@ -936,3 +278,136 @@
 2026-03-09 15:30:49,108  [FogEngine     ]  INFO  Shutdown signal received.
 2026-03-09 15:30:49,108  [VibrationEngine]  ERROR  Serial error: read failed: [Errno 9] Bad file descriptor
 2026-03-09 15:30:49,611  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
+2026-04-14 23:46:38,089  [FogEngine     ]  INFO  ==============================================================
+2026-04-14 23:46:38,090  [FogEngine     ]  INFO     Fog Engine — Starting
+2026-04-14 23:46:38,090  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
+2026-04-14 23:46:38,090  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
+2026-04-14 23:46:38,090  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
+2026-04-14 23:46:38,090  [FogEngine     ]  INFO  ==============================================================
+2026-04-14 23:46:38,094  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
+2026-04-14 23:46:38,094  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:46:38,095  [VibrationEngine]  WARNING  Vibration engine started without Arduino. Connect Arduino via USB and set SERIAL_PORT in config.py.
+2026-04-14 23:46:38,095  [VibrationEngine]  INFO  Vibration engine running.
+2026-04-14 23:46:38,095  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
+2026-04-14 23:46:38,095  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
+2026-04-14 23:46:38,095  [FogEngine     ]  INFO  Press Q in the camera window to quit.
+2026-04-14 23:46:38,095  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
+2026-04-14 23:46:38,163  [CameraGuard   ]  INFO  YOLO ready.
+2026-04-14 23:46:38,509  [CameraGuard   ]  INFO    Loaded face: kshitij
+2026-04-14 23:46:38,563  [CameraGuard   ]  INFO    Loaded face: person_20260401_182658
+2026-04-14 23:46:38,605  [CameraGuard   ]  INFO    Loaded face: person_20260401_182429
+2026-04-14 23:46:38,605  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij', 'person_20260401_182658', 'person_20260401_182429']
+2026-04-14 23:46:39,610  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
+2026-04-14 23:46:40,306  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260414_234640.jpg
+2026-04-14 23:46:43,100  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:46:46,308  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:46:48,106  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:46:50,242  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260414_234650.jpg
+2026-04-14 23:46:50,541  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260414_234650.jpg
+2026-04-14 23:46:53,112  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:46:53,534  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:46:58,116  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:46:59,246  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:00,737  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260414_234700.jpg
+2026-04-14 23:47:03,121  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:47:06,188  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:06,188  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:06,477  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:07,977  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:08,127  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:47:10,983  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260414_234710.jpg
+2026-04-14 23:47:12,233  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:13,130  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:47:18,132  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:47:18,611  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:18,903  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:47:21,051  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260414_234721.jpg
+2026-04-14 23:49:03,921  [FogEngine     ]  INFO  ==============================================================
+2026-04-14 23:49:03,921  [FogEngine     ]  INFO     Fog Engine — Starting
+2026-04-14 23:49:03,921  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
+2026-04-14 23:49:03,921  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
+2026-04-14 23:49:03,921  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
+2026-04-14 23:49:03,921  [FogEngine     ]  INFO  ==============================================================
+2026-04-14 23:49:03,922  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
+2026-04-14 23:49:03,923  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:49:03,923  [VibrationEngine]  WARNING  Vibration engine started without Arduino. Connect Arduino via USB and set SERIAL_PORT in config.py.
+2026-04-14 23:49:03,923  [VibrationEngine]  INFO  Vibration engine running.
+2026-04-14 23:49:03,923  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
+2026-04-14 23:49:03,923  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
+2026-04-14 23:49:03,923  [FogEngine     ]  INFO  Press Q in the camera window to quit.
+2026-04-14 23:49:03,923  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
+2026-04-14 23:49:03,948  [CameraGuard   ]  INFO  YOLO ready.
+2026-04-14 23:49:04,287  [CameraGuard   ]  INFO    Loaded face: kshitij
+2026-04-14 23:49:04,340  [CameraGuard   ]  INFO    Loaded face: person_20260401_182658
+2026-04-14 23:49:04,379  [CameraGuard   ]  INFO    Loaded face: person_20260401_182429
+2026-04-14 23:49:04,379  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij', 'person_20260401_182658', 'person_20260401_182429']
+2026-04-14 23:49:05,419  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
+2026-04-14 23:49:06,045  [CameraGuard   ]  WARNING  SUSPICIOUS ALERT | 1 person(s) | Signals: ['nighttime'] | Snapshot → fog/intruder_snapshots/suspicious_20260414_234906.jpg
+2026-04-14 23:49:08,929  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-14 23:49:09,903  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-14 23:49:13,508  [CameraGuard   ]  INFO  Quit key pressed.
+2026-04-14 23:49:13,559  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 130, 'persons_detected': 26, 'known_seen': 1, 'visitors': 0, 'suspicious': 1, 'intruders': 0}
+2026-04-14 23:49:13,559  [FogEngine     ]  INFO  Shutdown signal received.
+2026-04-14 23:49:13,559  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
+2026-04-15 11:48:51,448  [FogEngine     ]  INFO  ==============================================================
+2026-04-15 11:48:51,449  [FogEngine     ]  INFO     Fog Engine — Starting
+2026-04-15 11:48:51,449  [FogEngine     ]  INFO     Pipeline 1 : Sensor Anomaly  (Isolation Forest)
+2026-04-15 11:48:51,449  [FogEngine     ]  INFO     Pipeline 2 : Camera Intruder (YOLO + FaceRec)
+2026-04-15 11:48:51,449  [FogEngine     ]  INFO     Pipeline 3 : Vibration Guard (SW-420 + Arduino)
+2026-04-15 11:48:51,449  [FogEngine     ]  INFO  ==============================================================
+2026-04-15 11:48:51,449  [FogEngine     ]  WARNING  MQTT not available ([Errno 61] Connection refused) — sensor anomaly pipeline skipped.
+2026-04-15 11:48:51,450  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-15 11:48:51,450  [VibrationEngine]  WARNING  Vibration engine started without Arduino. Connect Arduino via USB and set SERIAL_PORT in config.py.
+2026-04-15 11:48:51,450  [VibrationEngine]  INFO  Vibration engine running.
+2026-04-15 11:48:51,450  [FogEngine     ]  INFO  Pipeline 3 active: Vibration perimeter (SW-420 + Arduino Uno)
+2026-04-15 11:48:51,450  [FogEngine     ]  INFO  Starting camera on main thread (required on macOS)...
+2026-04-15 11:48:51,450  [FogEngine     ]  INFO  Press Q in the camera window to quit.
+2026-04-15 11:48:51,450  [CameraGuard   ]  INFO  Loading YOLOv8 nano model...
+2026-04-15 11:48:51,478  [CameraGuard   ]  INFO  YOLO ready.
+2026-04-15 11:48:51,800  [CameraGuard   ]  INFO    Loaded face: kshitij
+2026-04-15 11:48:51,853  [CameraGuard   ]  INFO    Loaded face: person_20260401_182658
+2026-04-15 11:48:51,895  [CameraGuard   ]  INFO    Loaded face: person_20260401_182429
+2026-04-15 11:48:51,895  [CameraGuard   ]  INFO  Known faces loaded: ['kshitij', 'person_20260401_182658', 'person_20260401_182429']
+2026-04-15 11:48:53,268  [CameraGuard   ]  INFO  Webcam open (640x480). Threat classification running.
+2026-04-15 11:48:53,795  [CameraGuard   ]  WARNING  INTRUDER ALERT | 1 person(s) | Signals: ['face covered'] | Snapshot → fog/intruder_snapshots/intruder_20260415_114853.jpg
+2026-04-15 11:48:55,915  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:56,325  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:56,456  [VibrationEngine]  WARNING  Cannot open '/dev/tty.usbserial-1130': [Errno 2] could not open port /dev/tty.usbserial-1130: [Errno 2] No such file or directory: '/dev/tty.usbserial-1130'
+  Available ports: ['/dev/cu.debug-console - n/a', '/dev/cu.Bluetooth-Incoming-Port - n/a', '/dev/cu.soundcoreLiberty4NC - n/a']
+  Update SERIAL_PORT in fog/config.py
+2026-04-15 11:48:56,752  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:57,170  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:57,565  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:58,437  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:58,858  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:59,636  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:48:59,963  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:49:00,275  [CameraGuard   ]  INFO  Known: kshitij
+2026-04-15 11:49:01,051  [CameraGuard   ]  INFO  Quit key pressed.
+2026-04-15 11:49:01,095  [CameraGuard   ]  INFO  Camera stopped. Session stats: {'frames_processed': 103, 'persons_detected': 20, 'known_seen': 10, 'visitors': 6, 'suspicious': 0, 'intruders': 1}
+2026-04-15 11:49:01,095  [FogEngine     ]  INFO  Shutdown signal received.
+2026-04-15 11:49:01,095  [FogEngine     ]  INFO  Fog Engine stopped cleanly.
