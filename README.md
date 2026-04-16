@@ -1,6 +1,6 @@
 # 🌫️ AI-Driven Edge–Fog System for Real-Time Anomaly Detection
 
-> Team: Kshitij · Ananya · Mehak · Akanshi
+> Team: Kshitij · Ananya 
 
 ---
 
